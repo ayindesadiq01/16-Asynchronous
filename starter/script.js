@@ -350,35 +350,54 @@ GOOD LUCK 😀
 // console.log('Test end')
 
 // Building a simple promise
-let ran = Math.random(); 
-const lotteryPromise = new Promise(function(resolve, reject){
-  console.log('Lotter draw is happening')
+// let ran = Math.random(); 
+// const lotteryPromise = new Promise(function(resolve, reject){
+//   console.log('Lotter draw is happening')
 
-  setTimeout (function(){
-    if( ran >= 0.5) {
-    resolve(`You WIN 🤑 oo ${ran}`)
-  } else {
-    reject(`You lose 😢 ${ran}`)
-  }
-  },2000) 
+//   setTimeout (function(){
+//     if( ran >= 0.5) {
+//     resolve(`You WIN 🤑 oo ${ran}`)
+//   } else {
+//     reject(`You lose 😢 ${ran}`)
+//   }
+//   },2000) 
   
-})
+// })
 
-lotteryPromise.then(res => console.log(res)).catch(err => console.error(err))
+// lotteryPromise.then(res => console.log(res)).catch(err => console.error(err))
 
-// PROMISIFYING SETTIMEOUT
-const wait = function(seconds) {
-  return new Promise(function(resolve){
-    setTimeout(resolve, seconds * 1000);
+// // PROMISIFYING SETTIMEOUT
+// const wait = function(seconds) {
+//   return new Promise(function(resolve){
+//     setTimeout(resolve, seconds * 1000);
+//   })
+// }
+
+// wait(1).then(() => {
+//   console.log('I waited for 1 seconds')
+//   return wait(2)
+// }).then(() => {
+//   console.log('I waited for 2 seconds')
+//   return wait(3)
+// }).then(() => {
+//   console.log('I waited for 3 seconds')
+// })
+
+// PROMISIFYING THE GEOLOCATION API
+// navigator.geolocation.getCurrentPosition(position => console.log(position), 
+// err => console.error(err)
+// );
+// console.log('Getting position')
+
+const getPosition = function() {
+  return new Promise(function(resolve, reject){
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position), 
+    //   err => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject)
+    console.log('Getting position')
   })
 }
 
-wait(2).then(() => {
-  console.log('I waited for 2 seconds')
-  return wait(1)
-}).then(() => {
-  console.log('I waited for 1 seconds')
-  return wait(0)
-}).then(() => {
-  console.log('I waited for 0 seconds')
-})
+getPosition().then(pos => console.log(pos))
