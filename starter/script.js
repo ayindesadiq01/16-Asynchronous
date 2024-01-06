@@ -339,7 +339,46 @@ GOOD LUCK 😀
 // whereAmI(19.037, 72.873);
 // whereAmI(-33.933, 18.474);
 
-console.log('Test Start')
-console.log(setTimeout(() => console.log('0 sec timer'), 0))
-Promise.resolve('I love you').then(res => console.log(res))
-console.log('Test end')
+// console.log('Test Start')
+// console.log(setTimeout(() => console.log('0 sec timer'), 0))
+// Promise.resolve('I love you').then(res => console.log(res))
+
+// Promise.resolve('Resolved promise 2').then(res => {
+//   for(let i =0; i < 1000000000 ; i++) {}
+//   console.log(res)
+// })
+// console.log('Test end')
+
+// Building a simple promise
+let ran = Math.random(); 
+const lotteryPromise = new Promise(function(resolve, reject){
+  console.log('Lotter draw is happening')
+
+  setTimeout (function(){
+    if( ran >= 0.5) {
+    resolve(`You WIN 🤑 oo ${ran}`)
+  } else {
+    reject(`You lose 😢 ${ran}`)
+  }
+  },2000) 
+  
+})
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err))
+
+// PROMISIFYING SETTIMEOUT
+const wait = function(seconds) {
+  return new Promise(function(resolve){
+    setTimeout(resolve, seconds * 1000);
+  })
+}
+
+wait(2).then(() => {
+  console.log('I waited for 2 seconds')
+  return wait(1)
+}).then(() => {
+  console.log('I waited for 1 seconds')
+  return wait(0)
+}).then(() => {
+  console.log('I waited for 0 seconds')
+})
